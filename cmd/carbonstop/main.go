@@ -31,7 +31,7 @@ var rootCmd = &cobra.Command{
 	Long: `carbonstop is a command-line tool for interacting with the Carbonstop Gateway API.
 
 Get started:
-  1. Register at https://ccloud-d-test.carbonstop.com/
+  1. Register at https://ccloud.carbonstop.com/
   2. Create an API Key (PAT)
   3. Run: carbonstop auth login --api-key <your-key>
   4. Try:  carbonstop +ping

@@ -27,7 +27,7 @@ const (
 // validateAPIKey checks if the API key is configured.
 func validateAPIKey(cfg *config.Config) bool {
 	if cfg.APIKey == "" {
-		formatter.Info("missing api key. Get one at https://ccloud-d-test.carbonstop.com/ then run:")
+		formatter.Info("missing api key. Get one at https://ccloud.carbonstop.com/ then run:")
 			formatter.Info("  carbonstop auth login --api-key <your-key>")
 		os.Exit(ExitArgs)
 	}

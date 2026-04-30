@@ -67,7 +67,7 @@ func runAuthLogin(cfg *config.Config, apiKey string) {
 		}
 	}
 	if apiKey == "" {
-		fmt.Fprintln(os.Stderr, "[carbonstop] API key is required. Get one at https://ccloud-d-test.carbonstop.com/")
+		fmt.Fprintln(os.Stderr, "[carbonstop] API key is required. Get one at https://ccloud.carbonstop.com/")
 		os.Exit(ExitArgs)
 	}
 

@@ -51,7 +51,7 @@ make build
 
 ## Quick Start
 
-1. 登录 [碳云平台](https://ccloud-d-test.carbonstop.com/) 注册账号，创建 API Key（PAT）
+1. 登录 [碳云平台](https://ccloud.carbonstop.com/) 注册账号，创建 API Key（PAT）
 2. 使用 CLI 登录（官方二进制已内置网关地址）：
 
 ```bash
