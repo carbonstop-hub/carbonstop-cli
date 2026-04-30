@@ -1,0 +1,30 @@
+# Binary
+/carbonstop
+/carbonstop.exe
+/bin/
+
+# npm
+node_modules/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Go
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+vendor/
+
+# Config (contains secrets)
+config.json

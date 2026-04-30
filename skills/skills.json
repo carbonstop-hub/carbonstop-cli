@@ -1,0 +1,152 @@
+{
+  "name": "carbonstop-cli",
+  "version": "0.2.0",
+  "description": "Carbonstop Gateway API CLI — query products, accounts, emissions, and run AI-powered carbon footprint modeling.",
+  "baseCommand": "carbonstop",
+  "skills": [
+    {
+      "name": "ping",
+      "command": "ping",
+      "description": "Health check — verify the gateway is reachable and the API key is valid.",
+      "method": "GET",
+      "path": "L2Zvb3RwcmludDMvYWdlbnQvY2xpL3Bpbmc=",
+      "parameters": []
+    },
+    {
+      "name": "whoami",
+      "command": "whoami",
+      "description": "Show the identity (username, company, userId) associated with the current API key.",
+      "method": "GET",
+      "path": "L2Zvb3RwcmludDMvYWdlbnQvY2xpL3dob2FtaQ==",
+      "parameters": []
+    },
+    {
+      "name": "echo",
+      "command": "echo",
+      "description": "Send arbitrary JSON to the echo endpoint for connectivity testing.",
+      "method": "POST",
+      "path": "L2Zvb3RwcmludDMvYWdlbnQvY2xpL2VjaG8=",
+      "parameters": [
+        {"name": "data", "type": "string", "description": "Inline JSON body"},
+        {"name": "file", "type": "string", "description": "Path to JSON file ('-' for stdin)"}
+      ]
+    },
+    {
+      "name": "ai-model",
+      "command": "ai-model",
+      "description": "One-click AI carbon footprint modeling. Submit a product description and get factor-matched emission results with lifecycle stage breakdown.",
+      "method": "POST",
+      "path": "L2Zvb3RwcmludDMvYWNjb3VudEVtaXNzaW9uL2FpTW9kZWxCeUNvbnRlbnQ=",
+      "parameters": [
+        {"name": "data", "type": "string", "description": "Inline JSON body"},
+        {"name": "file", "type": "string", "description": "Path to JSON file ('-' for stdin)"}
+      ],
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "content": {"type": "string", "description": "一句话产品描述（必填），例如：一瓶农夫山泉500ml矿泉水"},
+          "scope": {"type": "integer", "description": "生命周期范围。0=半生命周期，1=全生命周期。可不传"},
+          "scopeValue": {"type": "string", "description": "半生命周期时传 \"0,1,2\"，全生命周期可不传"},
+          "factorScope": {"type": "integer", "description": "因子偏好。1=Ecoinvent，2=国内因子，3=不限来源。可不传"},
+          "userKeys": {"type": "array", "description": "用户自定义因子 key 列表，可不传"},
+          "signKeys": {"type": "array", "description": "标记的因子 key 列表，可不传"}
+        },
+        "required": ["content"]
+      }
+    },
+    {
+      "name": "products",
+      "command": "products",
+      "description": "List products with pagination and filtering.",
+      "method": "GET",
+      "path": "L2Zvb3RwcmludDMvcHJvZHVjdC9wcm9kdWN0TGlzdA==",
+      "parameters": [
+        {"name": "page-num", "type": "integer", "default": 1},
+        {"name": "page-size", "type": "integer", "default": 12},
+        {"name": "status", "type": "integer", "default": 2, "description": "Product status filter"},
+        {"name": "search", "type": "string", "description": "Search by product name"}
+      ]
+    },
+    {
+      "name": "product-info",
+      "command": "product-info",
+      "description": "Get detailed information about a specific product by ID.",
+      "method": "GET",
+      "path": "L2Zvb3RwcmludDMvcHJvZHVjdC9pbmZv",
+      "parameters": [
+        {"name": "id", "type": "integer", "required": true, "description": "Product ID"}
+      ]
+    },
+    {
+      "name": "accounts",
+      "command": "accounts",
+      "description": "List carbon footprint accounts (models) for a product.",
+      "method": "GET",
+      "path": "L2Zvb3RwcmludDMvYWNjb3VudC9saXN0",
+      "parameters": [
+        {"name": "product-id", "type": "integer", "required": true},
+        {"name": "page-num", "type": "integer", "default": 1},
+        {"name": "page-size", "type": "integer", "default": 10},
+        {"name": "account-status", "type": "integer", "default": 3}
+      ]
+    },
+    {
+      "name": "account-view",
+      "command": "account-view",
+      "description": "Get detailed view of a carbon footprint account with emission breakdown.",
+      "method": "GET",
+      "path": "L2Zvb3RwcmludDMvYWNjb3VudC9hY2NvdW50Vmlldw==",
+      "parameters": [
+        {"name": "id", "type": "integer", "required": true, "description": "Account ID"},
+        {"name": "group-type", "type": "integer", "default": 0},
+        {"name": "lang", "type": "string", "default": "zh"}
+      ]
+    },
+    {
+      "name": "call",
+      "command": "call",
+      "description": "Make an arbitrary HTTP request to any gateway endpoint. Useful for undocumented or new API endpoints.",
+      "method": "ANY",
+      "path": "<user-specified>",
+      "parameters": [
+        {"name": "method", "type": "string", "required": true, "argIndex": 0},
+        {"name": "path", "type": "string", "required": true, "argIndex": 1},
+        {"name": "data", "type": "string", "description": "Inline JSON body"},
+        {"name": "file", "type": "string", "description": "JSON file path ('-' for stdin)"},
+        {"name": "query", "type": "string", "description": "Query parameters (key=value)"},
+        {"name": "header", "type": "string", "description": "Extra headers (key=value)"}
+      ]
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "+ping",
+      "command": "+ping",
+      "description": "Health check with human-readable output (shortcut)."
+    },
+    {
+      "name": "+whoami",
+      "command": "+whoami",
+      "description": "Show identity with formatted output (shortcut)."
+    },
+    {
+      "name": "+model",
+      "command": "+model",
+      "description": "One-click modeling with stage summary table (shortcut)."
+    }
+  ],
+  "globalFlags": [
+    {"name": "base-url", "type": "string", "description": "Gateway base URL"},
+    {"name": "api-key", "type": "string", "description": "API Key (PAT)"},
+    {"name": "timeout", "type": "integer", "description": "Request timeout in seconds"},
+    {"name": "profile", "type": "string", "description": "Config profile name", "shorthand": "p"},
+    {"name": "raw", "type": "boolean", "description": "Output raw JSON"}
+  ],
+  "envVars": [
+    {"name": "CARBONSTOP_API_KEY", "description": "API Key (PAT) for authentication"},
+    {"name": "CARBONSTOP_BASE_URL", "description": "Gateway base URL override"},
+    {"name": "CARBONSTOP_TIMEOUT", "description": "Request timeout in seconds"},
+    {"name": "CARBONSTOP_PROFILE", "description": "Config profile name"}
+  ],
+  "configFile": "~/.config/carbonstop-cli/config.json"
+}

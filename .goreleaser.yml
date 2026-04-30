@@ -1,0 +1,54 @@
+before:
+  hooks:
+    - go mod tidy
+
+builds:
+  - id: carbonstop
+    main: ./cmd/carbonstop
+    binary: carbonstop
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - darwin
+      - windows
+    goarch:
+      - amd64
+      - arm64
+    ldflags:
+      - -s -w
+      - -X github.com/carbonstop/carbonstop-cli/internal/version.Version={{ .Version }}
+      - -X github.com/carbonstop/carbonstop-cli/internal/version.Commit={{ .Commit }}
+      - -X github.com/carbonstop/carbonstop-cli/internal/version.BuildTime={{ .Date }}
+      - -X github.com/carbonstop/carbonstop-cli/internal/version.BaseURL={{ .Env.RELEASE_BASE_URL_ENCODED }}
+
+archives:
+  - format: tar.gz
+    name_template: >-
+      {{ .ProjectName }}_
+      {{- .Version }}_
+      {{- .Os }}_
+      {{- if eq .Arch "amd64" }}x86_64
+      {{- else if eq .Arch "arm64" }}arm64
+      {{- else }}{{ .Arch }}{{ end }}
+    format_overrides:
+      - goos: windows
+        format: zip
+
+checksum:
+  name_template: 'checksums.txt'
+
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - '^docs:'
+      - '^test:'
+      - '^ci:'
+      - Merge pull request
+      - Merge branch
+
+release:
+  github:
+    owner: carbonstop-hub
+    name: carbonstop-cli
