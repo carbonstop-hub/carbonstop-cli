@@ -7,7 +7,7 @@ const os = require("os");
 const { execSync } = require("child_process");
 
 const BINARY = process.platform === "win32" ? "carbonstop.exe" : "carbonstop";
-const VERSION = "0.3.7"; // Go binary release version on GitHub
+const VERSION = "0.3.8"; // Go binary release version on GitHub
 
 function mapPlatform(platform) {
   switch (platform) {

@@ -1,6 +1,6 @@
 {
   "name": "@carbonstopper/cli",
-  "version": "3.0.14",
+  "version": "3.0.15",
   "description": "Carbonstop Gateway API CLI — 碳阻迹网关命令行工具",
   "bin": {
     "carbonstop": "scripts/run.js"
